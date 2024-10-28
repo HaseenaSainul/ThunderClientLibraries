@@ -906,6 +906,7 @@ private:
         }
         else {
             if (_deviceAudioCapabilitiesInterface != nullptr) {
+#if LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IAudioOutputIterator* index = nullptr;
 
                 _deviceAudioCapabilitiesInterface->AudioOutputs(index);
@@ -920,6 +921,25 @@ private:
                     index->Release();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+                Exchange::IDeviceAudioCapabilities::AudioOutput audioOutputs = Exchange::IDeviceAudioCapabilities::AUDIO_OTHER;
+
+                _deviceAudioCapabilitiesInterface->AudioOutputs(audioOutputs);
+                if (audioOutputs != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = audioOutputs;
+                    AudioOutputCapability audioOutputCapability;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            audioOutputCapability.type = Convert(static_cast<Exchange::IDeviceAudioCapabilities::AudioOutput>(bit));
+                            _audioOutputMap.insert(std::pair<Exchange::IDeviceAudioCapabilities::AudioOutput, AudioOutputCapability>(static_cast<Exchange::IDeviceAudioCapabilities::AudioOutput>(bit), audioOutputCapability));
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+#endif
             }
         }
         if (result == deviceinfo_status::DEVICEINFO_OK) {
@@ -963,6 +983,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
+#if LEGACY_INTERFACE_SUPPORT
                  Exchange::IDeviceAudioCapabilities::IAudioCapabilityIterator* capabilities = nullptr;
 
                 _deviceAudioCapabilitiesInterface->AudioCapabilities(audioPort, capabilities);
@@ -976,6 +997,24 @@ private:
                     index->second.audioCapabilities.shrink_to_fit();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+                Exchange::IDeviceAudioCapabilities::AudioCapability capabilities = Exchange::IDeviceAudioCapabilities::AUDIOCAPABILITY_NONE;
+
+                _deviceAudioCapabilitiesInterface->AudioCapabilities(audioPort, capabilities);
+                if (capabilities != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = capabilities;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            deviceinfo_audio_capability_type converted = Convert(static_cast<Exchange::IDeviceAudioCapabilities::AudioCapability>(bit));
+                            index->second.audioCapabilities.push_back(converted);
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+#endif
             }
         }
         if (result == deviceinfo_status::DEVICEINFO_OK) {
@@ -1019,6 +1058,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
+#if LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IMS12CapabilityIterator* capabilities = nullptr;
 
                 _deviceAudioCapabilitiesInterface->MS12Capabilities(audioPort, capabilities);
@@ -1032,6 +1072,24 @@ private:
                     index->second.ms12Capabilities.shrink_to_fit();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+                Exchange::IDeviceAudioCapabilities::MS12Capability capabilities = Exchange::IDeviceAudioCapabilities::MS12CAPABILITY_NONE;
+
+                _deviceAudioCapabilitiesInterface->MS12Capabilities(audioPort, capabilities);
+                if (capabilities != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = capabilities;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            deviceinfo_audio_ms12_capability_type converted = Convert(static_cast<Exchange::IDeviceAudioCapabilities::MS12Capability>(bit));
+                            index->second.ms12Capabilities.push_back(converted);
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+#endif
             }
         }
         if (result == deviceinfo_status::DEVICEINFO_OK) {
@@ -1075,6 +1133,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
+#if LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IMS12ProfileIterator* profiles = nullptr;
 
                 _deviceAudioCapabilitiesInterface->MS12AudioProfiles(audioPort, profiles);
@@ -1088,6 +1147,25 @@ private:
                     index->second.ms12AuioProfiles.shrink_to_fit();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+                Exchange::IDeviceAudioCapabilities::MS12Profile profiles = Exchange::IDeviceAudioCapabilities::MS12PROFILE_NONE;
+
+                _deviceAudioCapabilitiesInterface->MS12AudioProfiles(audioPort, profiles);
+                if (profiles != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = profiles;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            deviceinfo_audio_ms12_profile_type converted = Convert(static_cast<Exchange::IDeviceAudioCapabilities::MS12Profile>(bit));
+                            index->second.ms12AuioProfiles.push_back(converted);
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    index->second.ms12AuioProfiles.shrink_to_fit();
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+#endif
             }
         }
         if (result == deviceinfo_status::DEVICEINFO_OK) {
@@ -1128,6 +1206,7 @@ private:
         }
         else {
             if (_deviceVideoCapabilitiesInterface != nullptr) {
+#if LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceVideoCapabilities::IVideoOutputIterator* index = nullptr;
 
                 _deviceVideoCapabilitiesInterface->VideoOutputs(index);
@@ -1142,6 +1221,26 @@ private:
                     //_videoOutputMap.shrink_to_fit();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+                Exchange::IDeviceVideoCapabilities::VideoOutput outputs = Exchange::IDeviceVideoCapabilities::VIDEO_OTHER;
+
+                _deviceVideoCapabilitiesInterface->VideoOutputs(outputs);
+                if (outputs != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = outputs;
+                    VideoOutputCapability videoOutputCapability;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            videoOutputCapability.type = Convert(static_cast<Exchange::IDeviceVideoCapabilities::VideoOutput>(bit));
+                            _videoOutputMap.insert(std::pair<Exchange::IDeviceVideoCapabilities::VideoOutput, VideoOutputCapability>(static_cast<Exchange::IDeviceVideoCapabilities::VideoOutput>(bit), videoOutputCapability));
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    //_videoOutputMap.shrink_to_fit();
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+#endif
             }
         }
 
@@ -1186,6 +1285,7 @@ private:
         }
         else {
             if ((_deviceVideoCapabilitiesInterface != nullptr) && (index != _videoOutputMap.end())) {
+#if LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceVideoCapabilities::IScreenResolutionIterator* resolutions = nullptr;
 
                 _deviceVideoCapabilitiesInterface->Resolutions(videoPort, resolutions);
@@ -1199,6 +1299,26 @@ private:
                     index->second.resolutions.shrink_to_fit();
                     result = deviceinfo_status::DEVICEINFO_OK;
                 }
+#else
+
+                Exchange::IDeviceVideoCapabilities::ScreenResolution resolutions = Exchange::IDeviceVideoCapabilities::ScreenResolution_Unknown;
+                _deviceVideoCapabilitiesInterface->Resolutions(videoPort, resolutions);
+                if (resolutions != 0) {
+                    uint8_t bit = 0x1;
+                    uint8_t value = resolutions;
+                    while (value != 0) {
+                        if ((bit & value) != 0) {
+                            deviceinfo_output_resolution_type converted = Convert(static_cast<Exchange::IDeviceVideoCapabilities::ScreenResolution>(bit));
+                            index->second.resolutions.push_back(converted);
+                            value &= ~bit;
+                        }
+                        bit = (bit << 1);
+                    }
+                    index->second.resolutions.shrink_to_fit();
+                    result = deviceinfo_status::DEVICEINFO_OK;
+                }
+
+#endif
             }
         }
         if (result == deviceinfo_status::DEVICEINFO_OK) {

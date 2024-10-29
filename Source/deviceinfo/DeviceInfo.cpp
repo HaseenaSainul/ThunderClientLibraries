@@ -924,8 +924,8 @@ private:
 #else
                 Exchange::IDeviceAudioCapabilities::AudioOutput audioOutputs = Exchange::IDeviceAudioCapabilities::AUDIO_OTHER;
 
-                _deviceAudioCapabilitiesInterface->AudioOutputs(audioOutputs);
-                if (audioOutputs != 0) {
+                if ((_deviceAudioCapabilitiesInterface->AudioOutputs(audioOutputs) == Core::ERROR_NONE) &&
+                    (audioOutputs != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = audioOutputs;
                     AudioOutputCapability audioOutputCapability;
@@ -1000,8 +1000,8 @@ private:
 #else
                 Exchange::IDeviceAudioCapabilities::AudioCapability capabilities = Exchange::IDeviceAudioCapabilities::AUDIOCAPABILITY_NONE;
 
-                _deviceAudioCapabilitiesInterface->AudioCapabilities(audioPort, capabilities);
-                if (capabilities != 0) {
+                if ((_deviceAudioCapabilitiesInterface->AudioCapabilities(audioPort, capabilities) == Core::ERROR_NONE) &&
+                    (capabilities != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = capabilities;
                     while (value != 0) {
@@ -1075,8 +1075,8 @@ private:
 #else
                 Exchange::IDeviceAudioCapabilities::MS12Capability capabilities = Exchange::IDeviceAudioCapabilities::MS12CAPABILITY_NONE;
 
-                _deviceAudioCapabilitiesInterface->MS12Capabilities(audioPort, capabilities);
-                if (capabilities != 0) {
+                if ((_deviceAudioCapabilitiesInterface->MS12Capabilities(audioPort, capabilities) == Core::ERROR_NONE) &&
+                    (capabilities != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = capabilities;
                     while (value != 0) {
@@ -1150,8 +1150,8 @@ private:
 #else
                 Exchange::IDeviceAudioCapabilities::MS12Profile profiles = Exchange::IDeviceAudioCapabilities::MS12PROFILE_NONE;
 
-                _deviceAudioCapabilitiesInterface->MS12AudioProfiles(audioPort, profiles);
-                if (profiles != 0) {
+                if ((_deviceAudioCapabilitiesInterface->MS12AudioProfiles(audioPort, profiles) == Core::ERROR_NONE) &&
+                    (profiles != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = profiles;
                     while (value != 0) {
@@ -1224,8 +1224,8 @@ private:
 #else
                 Exchange::IDeviceVideoCapabilities::VideoOutput outputs = Exchange::IDeviceVideoCapabilities::VIDEO_OTHER;
 
-                _deviceVideoCapabilitiesInterface->VideoOutputs(outputs);
-                if (outputs != 0) {
+                if ((_deviceVideoCapabilitiesInterface->VideoOutputs(outputs) == Core::ERROR_NONE) &&
+                    (outputs != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = outputs;
                     VideoOutputCapability videoOutputCapability;
@@ -1302,8 +1302,8 @@ private:
 #else
 
                 Exchange::IDeviceVideoCapabilities::ScreenResolution resolutions = Exchange::IDeviceVideoCapabilities::ScreenResolution_Unknown;
-                _deviceVideoCapabilitiesInterface->Resolutions(videoPort, resolutions);
-                if (resolutions != 0) {
+                if ((_deviceVideoCapabilitiesInterface->Resolutions(videoPort, resolutions) == Core::ERROR_NONE) &&
+                    (resolutions != 0)) {
                     uint8_t bit = 0x1;
                     uint8_t value = resolutions;
                     while (value != 0) {

@@ -21,7 +21,11 @@
 #include <vector>
 
 #include "deviceinfo.h"
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
 #include <interfaces/IDeviceInfo.h>
+#else
+#include <interfaces/IDeviceInfoExt.h>
+#endif
 
 using namespace Thunder;
 namespace {

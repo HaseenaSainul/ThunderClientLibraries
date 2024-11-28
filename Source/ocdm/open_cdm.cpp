@@ -17,7 +17,11 @@
 
 #include "Module.h"
 #include "open_cdm.h"
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
 #include <interfaces/IOCDM.h>
+#else
+#include <interfaces/IOCDMExt.h>
+#endif
 #include "open_cdm_impl.h"
 
 MODULE_NAME_DECLARATION(BUILD_REFERENCE)

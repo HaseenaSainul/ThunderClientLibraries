@@ -906,7 +906,7 @@ private:
         }
         else {
             if (_deviceAudioCapabilitiesInterface != nullptr) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IAudioOutputIterator* index = nullptr;
 
                 _deviceAudioCapabilitiesInterface->AudioOutputs(index);
@@ -983,7 +983,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                  Exchange::IDeviceAudioCapabilities::IAudioCapabilityIterator* capabilities = nullptr;
 
                 _deviceAudioCapabilitiesInterface->AudioCapabilities(audioPort, capabilities);
@@ -1058,7 +1058,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IMS12CapabilityIterator* capabilities = nullptr;
 
                 _deviceAudioCapabilitiesInterface->MS12Capabilities(audioPort, capabilities);
@@ -1133,7 +1133,7 @@ private:
         }
         else {
             if ((_deviceAudioCapabilitiesInterface != nullptr) && (index != _audioOutputMap.end())) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceAudioCapabilities::IMS12ProfileIterator* profiles = nullptr;
 
                 _deviceAudioCapabilitiesInterface->MS12AudioProfiles(audioPort, profiles);
@@ -1206,7 +1206,7 @@ private:
         }
         else {
             if (_deviceVideoCapabilitiesInterface != nullptr) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceVideoCapabilities::IVideoOutputIterator* index = nullptr;
 
                 _deviceVideoCapabilitiesInterface->VideoOutputs(index);
@@ -1285,7 +1285,7 @@ private:
         }
         else {
             if ((_deviceVideoCapabilitiesInterface != nullptr) && (index != _videoOutputMap.end())) {
-#if defined(ENABLE_LEGACY_INTERFACE_SUPPORT)
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
                 Exchange::IDeviceVideoCapabilities::IScreenResolutionIterator* resolutions = nullptr;
 
                 _deviceVideoCapabilitiesInterface->Resolutions(videoPort, resolutions);

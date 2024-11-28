@@ -48,7 +48,7 @@ option(CRYPTOGRAPHY
 
 option(INSTALL_TESTS "Install the test applications" OFF)
 
-if (BUILD_REFERENCE)
+if(BUILD_REFERENCE)
     add_definitions (-DBUILD_REFERENCE=${BUILD_REFERENCE})
 endif()
 

@@ -32,7 +32,11 @@
 
 #include <core/core.h>
 #include <com/com.h>
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
 #include <interfaces/IComposition.h>
+#else
+#include <interfaces/ICompositionExt.h>
+#endif
 #include <virtualinput/virtualinput.h>
 #include <compositor/Client.h>
 #include "CursorData.h"

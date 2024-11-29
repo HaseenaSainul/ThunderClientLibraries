@@ -26,7 +26,12 @@
 #include <messaging/messaging.h>
 #include <plugins/plugins.h>
 
+#if ENABLE_LEGACY_INTERFACE_SUPPORT
 #include <interfaces/IComposition.h>
+#else
+#include <interfaces/ICompositionExt.h>
+#endif
+
 #include <interfaces/ICompositionBuffer.h>
 
 #include <compositor/Client.h>
